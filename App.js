@@ -5,32 +5,31 @@ import { StyleSheet, View } from 'react-native';
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-// Components
-import HeaderComponent from './components/header/Header.component';
-import HomeComponent from './components/home/Home.component';
-import SignInComponent from './components/sign-in/SignIn.component';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// Screens
+import MenuScreen from './screens/MenuScreen';
+import HomeScreen from './screens/HomeScreen';
+import SignInScreen from './screens/SignInScreen';
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  let user = null;
-
   return (
-    <View style={styles.container}>
-      <HeaderComponent />
+
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeComponent} options={{ user: user }} />
-          <Stack.Screen name="SignIn" component={SignInComponent} options={{ user: user }} />
-        </Stack.Navigator>
+        <Tab.Navigator initialRouteName="Home">
+          <Tab.Screen name="Home">
+            {props => <HomeScreen {...props} />}
+          </Tab.Screen>
+          <Tab.Screen name="SignIn">
+            {props => <SignInScreen {...props} />}
+          </Tab.Screen>
+        </Tab.Navigator>
       </NavigationContainer>
-      <StatusBar style="auto" />
-    </View>
   );
 }
 
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
