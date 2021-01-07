@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, Button, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, Button, StatusBar, ScrollView } from 'react-native';
 
 const Item = ({ item }) => {
   const accessibilityLabel = `Learn more about ${item.title}`;
@@ -36,6 +36,7 @@ const HomeScreen = (props) => {
   return (
     <View style={style.container}>
       <Text style={style.container_title}>Item list</Text>
+      <ScrollView>
       <SafeAreaView style={style.list}>
         <FlatList
           data={props.data}
@@ -43,13 +44,14 @@ const HomeScreen = (props) => {
           keyExtractor={item => `${item.id}`}
         />
       </SafeAreaView>
+      </ScrollView>
     </View>
   )
 }
 
 const style = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     padding: 10,
     backgroundColor: 'white'
   },
