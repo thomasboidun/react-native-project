@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, Button, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, Button, StatusBar, ScrollView } from 'react-native';
 
-const Item = ({ item }) => {
+const Item = ({ item, navigation }) => {
   const accessibilityLabel = `Learn more about ${item.title}`;
 
   return (
@@ -16,7 +16,7 @@ const Item = ({ item }) => {
       </View>
       <View style={style.item_footer}>
         <Button
-          onPress={() => { console.log(`Learn more about item id: ${item.id}`) }}
+          onPress={() => { navigation.navigate('Detail', { item: item }) }}
           title="Learn More"
           color="tomato"
           accessibilityLabel={accessibilityLabel}
@@ -27,29 +27,31 @@ const Item = ({ item }) => {
 }
 
 const HomeScreen = (props) => {
-  console.log(props.data);
+  console.log(props);
 
   const renderItem = ({ item }) => (
-    <Item item={item} />
+    <Item item={item} navigation={props.navigation} />
   )
 
   return (
     <View style={style.container}>
       <Text style={style.container_title}>Item list</Text>
-      <SafeAreaView style={style.list}>
-        <FlatList
-          data={props.data}
-          renderItem={renderItem}
-          keyExtractor={item => `${item.id}`}
-        />
-      </SafeAreaView>
+      <ScrollView>
+        <SafeAreaView style={style.list}>
+          <FlatList
+            data={props.data}
+            renderItem={renderItem}
+            keyExtractor={item => `${item.id}`}
+          />
+        </SafeAreaView>
+      </ScrollView>
     </View>
   )
 }
 
 const style = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     padding: 10,
     backgroundColor: 'white'
   },
@@ -67,7 +69,7 @@ const style = StyleSheet.create({
     padding: 10,
     borderRadius: 2,
     border: '1px solid tomato',
-    boxShadow: '0 0 5px 5px rgba(0, 0, 0, 0.25)',
+    // boxShadow: '0 0 5px 5px rgba(0, 0, 0, 0.25)',
     backgroundColor: 'white',
     marginBottom: 10,
     overflow: 'visible'
