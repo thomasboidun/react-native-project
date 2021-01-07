@@ -13,6 +13,6 @@ const style = StyleSheet.create({
   container: {
 
   }
-})
+});
 
 export default SignInScreen;
