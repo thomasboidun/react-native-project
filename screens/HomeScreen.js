@@ -16,7 +16,7 @@ const Item = ({ item, navigation }) => {
       </View>
       <View style={style.item_footer}>
         <Button
-          onPress={() => { navigation.navigate('Detail', { item: item }) }}
+          onPress={() => { navigation.navigate('Root', { screen: 'Detail', params: { item: item } }) }}
           title="Learn More"
           color="tomato"
           accessibilityLabel={accessibilityLabel}

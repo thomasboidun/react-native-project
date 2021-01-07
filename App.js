@@ -3,12 +3,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Router
 import 'react-native-gesture-handler';
 import { NavigationContainer, Stack } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // Screens
 import HomeScreen from './screens/HomeScreen';
 import SignInScreen from './screens/SignInScreen';
 import DetailScreen from './screens/DetailScreen';
 
+const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 const DATA = [
@@ -49,9 +51,20 @@ const DATA = [
   },
 ];
 
+const Root = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Detail" component={DetailScreen} />
+    </Stack.Navigator>
+  )
+}
+
 const App = () => {
   return (
     <NavigationContainer>
+      <Drawer.Navigator>
+        <Drawer.Screen name="Root" component={Root} />
+      </Drawer.Navigator>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
