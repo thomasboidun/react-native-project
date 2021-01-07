@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
 
 const Item = ({ title }) => {
-  <View style={style.item}>
+  return <View style={style.item}>
     <Text>{title}</Text>
   </View>
 }
@@ -11,7 +11,7 @@ const HomeScreen = (props) => {
   console.log(props.data);
 
   const renderItem = ({ item }) => {
-    <Item title={item.title} />
+    return <Item title={item.title} />
   }
 
   return (
@@ -20,7 +20,7 @@ const HomeScreen = (props) => {
       <FlatList
         data={props.data}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => `${item.id}`}
       />
     </SafeAreaView>
   )
