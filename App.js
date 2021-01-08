@@ -2,9 +2,11 @@ import * as React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // Router
 import 'react-native-gesture-handler';
-import { NavigationContainer, Stack } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+
 // Screens
 import HomeScreen from './screens/HomeScreen';
 import SignInScreen from './screens/SignInScreen';
@@ -12,6 +14,7 @@ import DetailScreen from './screens/DetailScreen';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const DATA = [
   {
@@ -62,9 +65,9 @@ const Root = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
+      {/*<Drawer.Navigator>
         <Drawer.Screen name="Root" component={Root} />
-      </Drawer.Navigator>
+      </Drawer.Navigator>*/}
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
