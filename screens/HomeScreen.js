@@ -9,8 +9,6 @@ import ItemDetailScreen from './ItemDetailScreen';
 const Stack = createStackNavigator();
 
 const HomeScreen = (props) => {
-  console.log(props);
-
   return (
     <NavigationContainer independent={true}>
       <Stack.Navigator>

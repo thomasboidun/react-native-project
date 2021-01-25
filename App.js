@@ -7,10 +7,29 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // Screens
 import HomeScreen from './screens/HomeScreen';
 import SignInScreen from './screens/SignInScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 
-const App = () => {
+const App = (props) => {
+  const [user, setUser] = React.useState(null);
+  // const [user, setUser] = React.useState({username: 'thomas', password: 'password'});
+
+  let tabName = '';
+  user? tabName = 'Account': tabName = 'Sign In';
+
+  const handleTab = (props) => {
+    if (user) {
+      return(
+        <SettingsScreen {...props} user={user} setUser={setUser}/>
+      )
+    } else {
+      return(
+        <SignInScreen {...props} user={user} setUser={setUser}/>
+      )
+    }
+  }
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -24,6 +43,9 @@ const App = () => {
                 break;
               case 'Sign In':
                 iconName = focused ? 'log-in' : 'log-in-outline';
+                break;
+              case 'Account':
+                iconName = focused ? 'person' : 'person-outline';
                 break;
             }
 
@@ -39,8 +61,8 @@ const App = () => {
         <Tab.Screen name="Home">
           {props => <HomeScreen {...props} />}
         </Tab.Screen>
-        <Tab.Screen name="Sign In">
-          {props => <SignInScreen {...props} />}
+        <Tab.Screen name={tabName}>
+          {props => handleTab(props)}
         </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>

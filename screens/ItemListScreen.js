@@ -65,8 +65,6 @@ const Item = ({ item, navigation }) => {
 }
 
 const ItemListScreen = (props) => {
-  console.log(props);
-
   const renderItem = ({ item }) => (
     <Item item={item} navigation={props.navigation} />
   )
@@ -88,7 +86,7 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'white'
+    // backgroundColor: 'white'
   },
   container_title: {
     fontSize: 32,
