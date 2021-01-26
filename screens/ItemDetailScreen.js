@@ -3,108 +3,71 @@ import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, Button, StatusBa
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ItemDetailScreen = (props) => {
-  console.log('user:', props.user);
+  // console.log(props);
+
   const ITEM = props.route.params.item;
   const onPress = () => { console.log('onPress') };
 
   return (
-    <View style={style.container}>
-      <View style={style.item_header}>
-        <Image style={style.item_img} source={{ uri: ITEM.imgUri }} />
+    // container
+    <View style={{ margin: 10, border: '1px solid tomato', borderRadius: 2, backgroundColor: 'white' }}>
+      {/* header */}
+      <View style={{ justifyContent: 'center', alignItems: 'center', padding: 10, paddingBottom: 0 }}>
+        <Image style={{ display: 'block', width: 110, height: 110 }} source={{ uri: ITEM.imgUri }} />
       </View>
-      <View style={style.item_body}>
-        <Text style={style.item_title}>{ITEM.title}</Text>
-        <Text style={style.item_desc}>{ITEM.desc}</Text>
-        <Text>Price: ${ITEM.price}/unit</Text>
+      {/* /header */}
+      {/* body */}
+      <View style={{ padding: 10 }}>
+        {/* title */}
+        <Text style={{ fontSize: 32, fontWeight: 'bold', marginBottom: 5 }}>{ITEM.title}</Text>
+        {/* /title */}
+        {/* row */}
+        <View style={{ flex: 1, flexDirection: 'row', marginBottom: 5 }}>
+          <Text style={{ fontWeight: 'bold', flex: 1 }}>Price:</Text>
+          <Text style={{ flex: 3 }}>${ITEM.price}/unit</Text>
+        </View>
+        {/* /row */}
+        {/* row */}
+        <View style={{ flex: 1, flexDirection: 'row', marginBottom: 0 }}>
+          <Text style={{ fontWeight: 'bold', flex: 1 }}>Desc.:</Text>
+          <Text style={{ flex: 3 }}>{ITEM.desc}</Text>
+        </View>
+        {/* /row */}
       </View>
-      <View style={style.item_footer}>
+      {/* /body */}
+      {/* footer */}
+      <View style={{ padding: 10 }}>
         <TouchableHighlight onPress={onPress}>
-          <View style={style.bgc_orange}>
-            <Text style={style.text_white}>
+          <View style={{ padding: 8, marginBottom: 10, borderRadius: 2, backgroundColor: 'tomato', border: '0px solid black' }}>
+            <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', textTransform: 'uppercase' }}>
               <Ionicons name='cash-outline' size={14} color='white' />
               &nbsp;Secured payment
               </Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={onPress}>
-          <View style={style.bgc_blue}>
-            <Text style={style.text_white}>
+          <View style={{ padding: 8, marginBottom: 10, borderRadius: 2, backgroundColor: 'cornflowerblue', border: '0px solid black' }}>
+            <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', textTransform: 'uppercase' }}>
               <Ionicons name='mail-outline' size={14} color='white' />
               &nbsp;Send a message
               </Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={onPress}>
-          <View style={style.bgc_invert_blue}>
-            <Text style={style.text_blue}>
+          <View style={{ padding: 8, marginBottom: 0, borderRadius: 2, backgroundColor: 'white', border: '1px solid cornflowerblue' }}>
+            <Text style={{ color: 'cornflowerblue', fontWeight: 'bold', textAlign: 'center', textTransform: 'uppercase' }}>
               <Ionicons name='call-outline' size={14} color='cornflowerblue' />
               &nbsp;See the phone number
               </Text>
           </View>
         </TouchableHighlight>
       </View>
+      {/* /footer */}
     </View>
+    // /container
   )
 }
 
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
-  item_header: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // marginBottom: 10,
-  },
-  item_img: {
-    width: 110,
-    height: 110,
-    display: 'block',
-    margin: '0 auto',
-  },
-  item_body: {
-    flex: 1,
-    // marginBottom: 10
-  },
-  item_title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-  },
-  bgc_orange: {
-    padding: 8,
-    marginBottom: 10,
-    borderRadius: 2,
-    backgroundColor: 'tomato',
-    border: '0px solid black'
-  },
-  bgc_blue: {
-    padding: 8,
-    marginBottom: 10,
-    borderRadius: 2,
-    backgroundColor: 'cornflowerblue',
-    border: '0px solid black'
-  },
-  bgc_invert_blue: {
-    padding: 8,
-    marginBottom: 10,
-    borderRadius: 2,
-    backgroundColor: 'white',
-    border: '1px solid cornflowerblue'
-  },
-  text_white: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    textTransform: 'uppercase',
-  },
-  text_blue: {
-    color: 'cornflowerblue',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    textTransform: 'uppercase',
-  }
-});
+// const style = StyleSheet.create({});
 
 export default ItemDetailScreen;

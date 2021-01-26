@@ -6,26 +6,100 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // Screens
 import HomeScreen from './screens/HomeScreen';
-import SignInScreen from './screens/SignInScreen';
+import AuthScreen from './screens/AuthScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 
+let data = {
+  items: [
+    {
+      id: 0,
+      imgUri: 'https://www.pokepedia.fr/images/thumb/e/e2/Pok%C3%A9_Ball-RS.png/300px-Pok%C3%A9_Ball-RS.png',
+      title: 'Monster Ball',
+      desc: 'The most classic of Balls. She has a Ball bonus of 1.',
+      price: 200,
+    },
+    {
+      id: 1,
+      imgUri: 'https://www.pokepedia.fr/images/thumb/f/f8/Super_Ball-RS.png/150px-Super_Ball-RS.png',
+      title: 'Super Ball',
+      desc: 'Slightly more effective than the Monster Ball. She has a Ball bonus of 1.5.',
+      price: 600,
+    },
+    {
+      id: 2,
+      imgUri: 'https://www.pokepedia.fr/images/thumb/b/bd/Hyper_Ball-RS.png/300px-Hyper_Ball-RS.png',
+      title: 'Hyper Ball',
+      desc: 'A little more efficient than the Super Ball, its Ball bonus is 2.',
+      price: 1200,
+    },
+    {
+      id: 3,
+      imgUri: 'https://www.pokepedia.fr/images/a/ac/Master_Ball-RS.png',
+      title: 'Master Ball',
+      desc: 'The ultimate ball, she cannot fail.',
+      price: 200000,
+    },
+    {
+      id: 4,
+      imgUri: 'https://www.pokepedia.fr/images/thumb/f/fd/Safari_Ball-RS.png/300px-Safari_Ball-RS.png',
+      title: 'Safari Ball',
+      desc: 'Ball used for capture in Safari Game. Same efficiency as the Super Ball, i.e. 1.5.',
+      price: 600,
+    },
+  ],
+  users: [
+    {
+      id: 0,
+      username: 'test',
+      password: 'test',
+      email: 'test.test@test.test',
+      phone: '01 23 45 67 89',
+    },
+    {
+      id: 1,
+      username: 'tomato',
+      password: 'tomato',
+      email: 'thomas.boidun@live.fr',
+      phone: '06 51 83 04 35',
+    }
+  ]
+};
+
+
 const App = (props) => {
-  const [user, setUser] = React.useState(null);
-  // const [user, setUser] = React.useState({username: 'thomas', password: 'password'});
+  const [current_user, setCurrentUser] = React.useState(null);
+  const [users, setUsers] = React.useState(data.users);
+  const [items, setItems] = React.useState(data.items);
+
+  const addUser = (new_user) => {
+    let users_copy = users;
+    new_user.id = 0;
+
+    users.forEach(user => {
+      if(user.id > new_user.id) {
+        new_user.id = user.id + 1;
+      }
+    })
+
+    users_copy.push(new_user);
+    setUsers(users_copy);
+
+    return new_user;
+  }
 
   let tabName = '';
-  user? tabName = 'Account': tabName = 'Sign In';
+  current_user ? tabName = 'Account' : tabName = 'Sign In';
 
   const handleTab = (props) => {
-    if (user) {
-      return(
-        <SettingsScreen {...props} user={user} setUser={setUser}/>
+    if (current_user) {
+      return (
+        <SettingsScreen {...props} current_user={current_user} setCurrentUser={setCurrentUser} />
       )
     } else {
-      return(
-        <SignInScreen {...props} user={user} setUser={setUser}/>
+      return (
+        <AuthScreen {...props} users={users} addUser={addUser} setCurrentUser={setCurrentUser} />
       )
     }
   }
@@ -59,7 +133,7 @@ const App = (props) => {
         }}
       >
         <Tab.Screen name="Home">
-          {props => <HomeScreen {...props} />}
+          {props => <HomeScreen {...props} items={items} users={users} />}
         </Tab.Screen>
         <Tab.Screen name={tabName}>
           {props => handleTab(props)}
