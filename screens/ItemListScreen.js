@@ -1,12 +1,13 @@
-import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, Button, StatusBar, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, SafeAreaView, Image, Button, ScrollView } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import { StatusBar } from 'expo-status-bar';
+import { useSelector } from "react-redux";
+import { Searchbar } from 'react-native-paper';
 
 const Item = ({ item, navigation, tags }) => {
-  // console.log(tags);
-
   let tag = tags.filter(tag => tag.id === item.tagId)[0];
-
-  // console.log(tag);
 
   return (
     // container
@@ -19,7 +20,10 @@ const Item = ({ item, navigation, tags }) => {
       <View style={{ flex: 3 }}>
 
         <View style={{ marginBottom: 10 }}>
-          <Text style={{ position: 'absolute', right: 0, textTransform: 'uppercase', backgroundColor: 'gray', color: 'white', padding: 5, borderRadius: 2 }}>{tag.name}</Text>
+          <Text style={{ position: 'absolute', right: 0, textTransform: 'uppercase', backgroundColor: 'gray', color: 'white', padding: 5, borderRadius: 2 }}>
+            <Ionicons name='pricetag' size={14} color='white' />
+            &nbsp;{tag.name}
+          </Text>
           <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{item.title}</Text>
           <Text>${item.price}/unit</Text>
         </View>
@@ -41,18 +45,34 @@ const Item = ({ item, navigation, tags }) => {
 const ItemListScreen = (props) => {
   console.log(props);
 
-  const renderItem = ({ item }) => (
-    <Item item={item} navigation={props.navigation} tags={props.tags} />
-  )
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const onChangeSearch = query => setSearchQuery(query);
+
+  const items = useSelector(state => state.items);
 
   return (
     <ScrollView style={{ flex: 1, padding: 10 }}>
       <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight || 0 }}>
-        <FlatList
-          data={props.items}
-          renderItem={renderItem}
-          keyExtractor={item => `${item.id}`}
-        />
+
+        <View style={{ marginBottom: 10 }}>
+          <Searchbar
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+          />
+        </View>
+        {
+          items.filter(item => {
+            const title = item.title.toLowerCase();
+            const query = searchQuery.toLowerCase();
+
+            return !query || query && title.includes(query)
+          }).map(item => {
+            return (<Item item={item} navigation={props.navigation} tags={props.tags} />)
+          })
+        }
+        <StatusBar style="auto" />
       </SafeAreaView>
     </ScrollView>
   )

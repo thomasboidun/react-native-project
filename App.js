@@ -9,7 +9,8 @@ import HomeScreen from './screens/HomeScreen';
 import AuthScreen from './screens/AuthScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
-// import { createStore } from 'redux';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux'
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +28,7 @@ let data = {
   items: [
     {
       id: 0,
-      imgUri: 'https://www.pokepedia.fr/images/thumb/e/e2/Pok%C3%A9_Ball-RS.png/300px-Pok%C3%A9_Ball-RS.png',
+      imgUri: 'https://www.pokepedia.fr/images/f/fa/Pok%C3%A9_Ball-PGL.png',
       title: 'Monster Ball',
       tagId: 0,
       desc: 'The most classic of Balls. She has a Ball bonus of 1.',
@@ -36,7 +37,7 @@ let data = {
     },
     {
       id: 1,
-      imgUri: 'https://www.pokepedia.fr/images/thumb/f/f8/Super_Ball-RS.png/150px-Super_Ball-RS.png',
+      imgUri: 'https://www.pokepedia.fr/images/b/bf/Super_Ball-PGL.png',
       title: 'Super Ball',
       tagId: 0,
       desc: 'Slightly more effective than the Monster Ball. She has a Ball bonus of 1.5.',
@@ -45,7 +46,7 @@ let data = {
     },
     {
       id: 2,
-      imgUri: 'https://www.pokepedia.fr/images/thumb/b/bd/Hyper_Ball-RS.png/300px-Hyper_Ball-RS.png',
+      imgUri: 'https://www.pokepedia.fr/images/3/36/Hyper_Ball-PGL.png',
       title: 'Hyper Ball',
       tagId: 0,
       desc: 'A little more efficient than the Super Ball, its Ball bonus is 2.',
@@ -54,7 +55,7 @@ let data = {
     },
     {
       id: 3,
-      imgUri: 'https://www.pokepedia.fr/images/a/ac/Master_Ball-RS.png',
+      imgUri: 'https://www.pokepedia.fr/images/a/ab/Master_Ball-PGL.png',
       title: 'Master Ball',
       tagId: 0,
       desc: 'The ultimate ball, she cannot fail.',
@@ -63,7 +64,7 @@ let data = {
     },
     {
       id: 4,
-      imgUri: 'https://www.pokepedia.fr/images/thumb/f/fd/Safari_Ball-RS.png/300px-Safari_Ball-RS.png',
+      imgUri: 'https://www.pokepedia.fr/images/6/61/Safari_Ball-PGL.png',
       title: 'Safari Ball',
       tagId: 0,
       desc: 'Ball used for capture in Safari Game. Same efficiency as the Super Ball, i.e. 1.5.',
@@ -154,6 +155,15 @@ const App = (props) => {
 
   };
 
+  const itemsReducer = (state = { items: data.items }, action) => {
+    switch (action.type) {
+      default:
+        return state;
+    }
+  }
+
+  let store = createStore(itemsReducer);
+
   let tabName = '';
   current_user ? tabName = 'Account' : tabName = 'Sign In';
 
@@ -170,41 +180,43 @@ const App = (props) => {
   }
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
 
-            switch (route.name) {
-              case 'Home':
-                iconName = focused ? 'home' : 'home-outline';
-                break;
-              case 'Sign In':
-                iconName = focused ? 'log-in' : 'log-in-outline';
-                break;
-              case 'Account':
-                iconName = focused ? 'person' : 'person-outline';
-                break;
-            }
+              switch (route.name) {
+                case 'Home':
+                  iconName = focused ? 'home' : 'home-outline';
+                  break;
+                case 'Sign In':
+                  iconName = focused ? 'log-in' : 'log-in-outline';
+                  break;
+                case 'Account':
+                  iconName = focused ? 'person' : 'person-outline';
+                  break;
+              }
 
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
-        }}
-      >
-        <Tab.Screen name="Home">
-          {props => <HomeScreen {...props} tags={tags} items={items} users={users} current_user={current_user} setCurrentUser={setCurrentUser} />}
-        </Tab.Screen>
-        <Tab.Screen name={tabName}>
-          {props => handleTab(props)}
-        </Tab.Screen>
-      </Tab.Navigator>
-    </NavigationContainer>
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: 'tomato',
+            inactiveTintColor: 'gray',
+          }}
+        >
+          <Tab.Screen name="Home">
+            {props => <HomeScreen {...props} tags={tags} items={items} users={users} current_user={current_user} setCurrentUser={setCurrentUser} />}
+          </Tab.Screen>
+          <Tab.Screen name={tabName}>
+            {props => handleTab(props)}
+          </Tab.Screen>
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

@@ -22,7 +22,7 @@ const BlockButtonComponent = (props) => {
       <Modal
         animationType="slide"
         presentationStyle="fullScreen"
-        transparent={true}
+        // transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
@@ -41,7 +41,7 @@ const BlockButtonComponent = (props) => {
           },
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
-          elevation: 5
+          elevation: 5,
         }}>
           <Text>{user.phone}</Text>
           <TouchableHighlight

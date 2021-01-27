@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, Button, TextInput } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CreateAccountScreen = (props) => {
   console.log(props);
