@@ -78,7 +78,7 @@ let data = {
       tagId: 1,
       desc: 'A strange stone that makes certain species of Pokémon evolve. It is yellow and orange.',
       price: 3000,
-      userId: 0,
+      userId: 1,
     },
     {
       id: 6,
@@ -87,7 +87,7 @@ let data = {
       tagId: 1,
       desc: 'A strange stone that makes certain species of Pokémon evolve. It is of blue color.',
       price: 3000,
-      userId: 0,
+      userId: 2,
     },
     {
       id: 8,
@@ -96,7 +96,7 @@ let data = {
       tagId: 1,
       desc: 'A strange stone that makes certain species of Pokémon evolve. A leaf is drawn on it.',
       price: 3000,
-      userId: 0,
+      userId: 5,
     },
     {
       id: 9,
@@ -105,7 +105,7 @@ let data = {
       tagId: 1,
       desc: 'A strange stone that makes certain species of Pokémon evolve. A lightning bolt is drawn on it.',
       price: 3000,
-      userId: 0,
+      userId: 3,
     },
     {
       id: 10,
@@ -114,20 +114,60 @@ let data = {
       tagId: 1,
       desc: 'A strange stone that makes certain species of Pokémon evolve. It is dark as night.',
       price: 3000,
-      userId: 0,
+      userId: 4,
     },
   ],
   users: [
     {
       id: 0,
-      username: 'admin',
+      username: 'Kurt',
       password: '',
-      email: 'admin@app.com',
-      phone: '01 23 45 67 89',
-    }
+      email: 'kurt@email.com',
+      phone: '00 00 00 00 00',
+      imgUri: 'https://www.pokepedia.fr/images/6/67/Fargas_anim%C3%A9.png'
+    },
+    {
+      id: 1,
+      username: 'Pyro',
+      password: '',
+      email: 'pyro@email.com',
+      phone: '00 00 00 00 00',
+      imgUri: 'https://www.pokepedia.fr/images/3/31/Freddy.png'
+    },
+    {
+      id: 2,
+      username: 'Rainer',
+      password: '',
+      email: 'rainer@email.com',
+      phone: '00 00 00 00 00',
+      imgUri: 'https://www.pokepedia.fr/images/a/ac/Pat.png'
+    },
+    {
+      id: 3,
+      username: 'Sparky',
+      password: '',
+      email: 'sparky@email.com',
+      phone: '00 00 00 00 00',
+      imgUri: 'https://www.pokepedia.fr/images/8/89/Fr%C3%A8re_de_Michel.png'
+    },
+    {
+      id: 4,
+      username: 'Clefable',
+      password: '',
+      email: 'clefable@email.com',
+      phone: '00 00 00 00 00',
+      imgUri: 'https://www.pokepedia.fr/images/d/db/EP090_-_M%C3%A9lodelfe_d%27un_dresseur.png'
+    },
+    {
+      id: 5,
+      username: 'Ephraim',
+      password: '',
+      email: 'ephraim@email.com',
+      phone: '00 00 00 00 00',
+      imgUri: 'https://www.pokepedia.fr/images/thumb/1/1a/Ephram.png/375px-Ephram.png'
+    },
   ]
 };
-
 
 const App = (props) => {
   const [current_user, setCurrentUser] = React.useState(null);
@@ -150,10 +190,6 @@ const App = (props) => {
 
     return new_user;
   }
-
-  const findUser = (username, password) => {
-
-  };
 
   const itemsReducer = (state = { items: data.items }, action) => {
     switch (action.type) {

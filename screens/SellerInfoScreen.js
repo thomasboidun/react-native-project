@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { Text, View, SafeAreaView, Image, Button, ScrollView } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, Button } from 'react-native';
 import { useSelector } from "react-redux";
-import { Searchbar } from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { StatusBar } from 'expo-status-bar';
 
 const Item = ({ item, navigation, tags }) => {
   let tag = tags.filter(tag => tag.id === item.tagId)[0];
@@ -42,44 +40,42 @@ const Item = ({ item, navigation, tags }) => {
   )
 }
 
-const ItemListScreen = (props) => {
+
+const SellerInfoScreen = (props) => {
   console.log(props);
 
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const onChangeSearch = query => setSearchQuery(query);
+  const seller = props.users.filter(user => user.id === props.route.params.sellerId)[0];
 
   const items = useSelector(state => state.items);
 
   return (
     <ScrollView style={{ flex: 1, padding: 10 }}>
       <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight || 0 }}>
+        <View style={{ padding: 10 }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <Image
+              source={{ uri: seller.imgUri }}
+              style={{ width: 300, height: 200, resizeMode: 'contain' }}
+            />
+            <Text style={{ fontSize: 32, fontWeight: 'bold', textAlign: 'center', marginBottom: 5 }}>{seller.username}</Text>
+          </View>
 
-        <View style={{ marginBottom: 10 }}>
-          <Searchbar
-            placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          />
+          <View>
+            <Text style={{ fontWeight: 'bold', marginBottom: 10 }}>Items sold by {seller.username}:</Text>
+          </View>
+          {
+            items.filter(item => {
+              return item.userId === seller.id
+            }).map(item => {
+              return (<Item key={item.id} item={item} navigation={props.navigation} tags={props.tags} />)
+            })
+          }
         </View>
 
-        {
-          items.filter(item => {
-            const title = item.title.toLowerCase();
-            const query = searchQuery.toLowerCase();
-
-            return !query || query && title.includes(query)
-          }).map(item => {
-            return (<Item key={item.id} item={item} navigation={props.navigation} tags={props.tags} />)
-          })
-        }
-        
         <StatusBar style="auto" />
       </SafeAreaView>
     </ScrollView>
   )
 }
 
-// const style = StyleSheet.create({});
-
-export default ItemListScreen;
+export default SellerInfoScreen;

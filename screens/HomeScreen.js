@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Screens
 import ItemListScreen from './ItemListScreen';
 import ItemDetailScreen from './ItemDetailScreen';
+import SellerInfoScreen from './SellerInfoScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,9 @@ const HomeScreen = (props) => {
         </Stack.Screen>
         <Stack.Screen name={"Item Detail"}>
           {props => <ItemDetailScreen {...props} tags={tags} items={items} users={users} current_user={current_user} setCurrentUser={setCurrentUser} />}
+        </Stack.Screen>
+        <Stack.Screen name={"Seller Info"}>
+          {props => <SellerInfoScreen {...props} tags={tags} items={items} users={users} current_user={current_user} setCurrentUser={setCurrentUser} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

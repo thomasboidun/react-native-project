@@ -9,6 +9,8 @@ const CreateAccountScreen = (props) => {
   const [email, setEmail] = React.useState('');
   const [phone, setPhone] = React.useState('');
 
+  const [alert, setAlert] = React.useState({ style: { display: 'none' }, message: '' });
+
   const createUser = () => {
     const instance = {
       username: username,
@@ -17,8 +19,25 @@ const CreateAccountScreen = (props) => {
       phone: phone
     }
 
-    const new_user = props.addUser(instance);
-    props.navigation.navigate('Sign In', { new_user: new_user });
+    const errors = props.users.filter(user => user.username.toLowerCase() === instance.username.toLowerCase());
+
+    if (errors.length > 0) {
+      setAlert({
+        style: {
+          display: 'flex',
+          flex: 1,
+          padding: 8,
+          color: 'white',
+          borderRadius: 2,
+          backgroundColor: 'indianred',
+          marginBottom: 10,
+        },
+        message: `Oops! The account with username ${instance.username} already exist. Please, try again with other username.`
+      })
+    } else {
+      const new_user = props.addUser(instance);
+      props.navigation.navigate('Sign In', { new_user: new_user });
+    }
   }
 
   return (
@@ -51,6 +70,9 @@ const CreateAccountScreen = (props) => {
         value={phone}
         label='Phone'
       />
+      <Text style={alert.style}>
+        {alert.message}
+      </Text>
       <Button
         title="Sign up"
         onPress={() => { createUser() }}
