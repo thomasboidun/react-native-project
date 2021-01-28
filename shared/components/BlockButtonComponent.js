@@ -2,19 +2,26 @@ import React, { useState } from 'react';
 import { Text, View, TouchableHighlight, Linking, Platform, Modal, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { useSelector } from "react-redux";
+
 const BlockButtonComponent = (props) => {
   console.log(props);
 
-  const item = props.items.filter(item => item.id === props.route.params.itemId)[0];
-  const user = props.users.filter(user => user.id === item.userId)[0];
+  // Store
+  const ITEMS = useSelector(state => state.items);
+  const ID = props.route.params.itemId;
+  const ITEM = ITEMS.filter(item => item.id === ID)[0];
+
+  // const item = props.items.filter(item => item.id === props.route.params.itemId)[0];
+  const SELLER = useSelector(state => state.users).filter(user => user.id === ITEM.userId)[0];
 
   let [modalVisible, setModalVisible] = useState(false);
 
   const sendMessage = () => {
     // console.log(Platform);
     Platform.OS === 'web' ?
-      Linking.openURL(`mailto:${user.email}`) :
-      Linking.openURL(`sms:${user.phone}`);
+      Linking.openURL(`mailto:${SELLER.email}`) :
+      Linking.openURL(`sms:${SELLER.phone}`);
   };
 
   return (
@@ -43,7 +50,7 @@ const BlockButtonComponent = (props) => {
           shadowRadius: 3.84,
           elevation: 5,
         }}>
-          <Text>{user.phone}</Text>
+          <Text>{SELLER.phone}</Text>
           <TouchableHighlight
             style={{ backgroundColor: "#2196F3" }}
             onPress={() => { setModalVisible(false) }}

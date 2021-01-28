@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight } from 'react-native';
+import { useSelector } from "react-redux";
+
 
 const SignInScreen = (props) => {
   console.log(props);
@@ -10,7 +12,7 @@ const SignInScreen = (props) => {
   const [alert, setAlert] = React.useState({ style: { display: 'none' }, message: '' });
 
   const findUser = () => {
-    const user = props.users.filter(user => user.username === username && user.password === password)[0];
+    const user = useSelector(state => state.users).filter(user => user.username === username && user.password === password)[0];
     if (user) {
       props.setCurrentUser(user);
       props.navigation.navigate('Home'); // return console error

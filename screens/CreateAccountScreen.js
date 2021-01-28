@@ -1,5 +1,7 @@
 import React from 'react';
 import { Text, View, Button, TextInput } from 'react-native';
+import { useSelector } from "react-redux";
+
 
 const CreateAccountScreen = (props) => {
   console.log(props);
@@ -11,17 +13,26 @@ const CreateAccountScreen = (props) => {
 
   const [alert, setAlert] = React.useState({ style: { display: 'none' }, message: '' });
 
+  const USERS = useSelector(state => state.users);
+  const addUser = props.addUser;
+  // console.log(addUser);
+
   const createUser = () => {
+    console.log('create user start')
     const instance = {
       username: username,
       password: password,
       email: email,
       phone: phone
     }
+    console.log('create user instance ok.', instance);
 
-    const errors = props.users.filter(user => user.username.toLowerCase() === instance.username.toLowerCase());
+    const errors = USERS.filter(user => user.username.toLowerCase() === instance.username.toLowerCase());
+
+    console.log('errors', errors)
 
     if (errors.length > 0) {
+      console.log('create user error...');
       setAlert({
         style: {
           display: 'flex',
@@ -35,7 +46,8 @@ const CreateAccountScreen = (props) => {
         message: `Oops! The account with username ${instance.username} already exist. Please, try again with other username.`
       })
     } else {
-      const new_user = props.addUser(instance);
+      console.log('create user ok. next add user...')
+      const new_user = addUser(instance);
       props.navigation.navigate('Sign In', { new_user: new_user });
     }
   }

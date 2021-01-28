@@ -12,7 +12,6 @@ const Stack = createStackNavigator();
 const AuthScreen = (props) => {
   console.log(props);
 
-  const users = props.users;
   const addUser = props.addUser;
   const setCurrentUser = props.setCurrentUser;
 
@@ -20,13 +19,13 @@ const AuthScreen = (props) => {
     <NavigationContainer independent={true}>
       <Stack.Navigator>
         <Stack.Screen name={"Sign In"}>
-          {props => <SignInScreen {...props} users={users} setCurrentUser={setCurrentUser}/>}
+          {props => <SignInScreen {...props} setCurrentUser={setCurrentUser} />}
         </Stack.Screen>
         <Stack.Screen name={"Create Account"}>
-          {props => <CreateAccountScreen {...props} users={users} addUser={addUser} />}
+          {props => <CreateAccountScreen {...props} addUser={addUser} />}
         </Stack.Screen>
         <Stack.Screen name={"Forgotten Password"}>
-          {props => <ForgottenPasswordScreen {...props} users={users}/>}
+          {props => <ForgottenPasswordScreen {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

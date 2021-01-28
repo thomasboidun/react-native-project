@@ -11,10 +11,7 @@ const Stack = createStackNavigator();
 
 const HomeScreen = (props) => {
   console.log(props);
-
-  const users = props.users;
-  const items = props.items;
-  const tags = props.tags;
+  
   const current_user = props.current_user;
   const setCurrentUser = props.setCurrentUser;
 
@@ -22,13 +19,13 @@ const HomeScreen = (props) => {
     <NavigationContainer independent={true}>
       <Stack.Navigator>
         <Stack.Screen name={"Item List"}>
-          {props => <ItemListScreen {...props} tags={tags} items={items} users={users} current_user={current_user} setCurrentUser={setCurrentUser} />}
+          {props => <ItemListScreen {...props} current_user={current_user} setCurrentUser={setCurrentUser} />}
         </Stack.Screen>
         <Stack.Screen name={"Item Detail"}>
-          {props => <ItemDetailScreen {...props} tags={tags} items={items} users={users} current_user={current_user} setCurrentUser={setCurrentUser} />}
+          {props => <ItemDetailScreen {...props} current_user={current_user} setCurrentUser={setCurrentUser} />}
         </Stack.Screen>
         <Stack.Screen name={"Seller Info"}>
-          {props => <SellerInfoScreen {...props} tags={tags} items={items} users={users} current_user={current_user} setCurrentUser={setCurrentUser} />}
+          {props => <SellerInfoScreen {...props} current_user={current_user} setCurrentUser={setCurrentUser} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

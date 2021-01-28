@@ -10,11 +10,11 @@ import AuthScreen from './screens/AuthScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
 import { createStore } from 'redux';
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 
 const Tab = createBottomTabNavigator();
 
-let data = {
+const DATA = {
   tags: [
     {
       id: 0,
@@ -169,36 +169,36 @@ let data = {
   ]
 };
 
-const App = (props) => {
-  const [current_user, setCurrentUser] = React.useState(null);
-  const [users, setUsers] = React.useState(data.users);
-  const [items, setItems] = React.useState(data.items);
-  const [tags, setTags] = React.useState(data.tags);
-
-  const addUser = (new_user) => {
-    let users_copy = users;
-    new_user.id = 0;
-
-    users.forEach(user => {
-      if (user.id > new_user.id) {
-        new_user.id = user.id + 1;
-      }
-    })
-
-    users_copy.push(new_user);
-    setUsers(users_copy);
-
-    return new_user;
-  }
-
-  const itemsReducer = (state = { items: data.items }, action) => {
+const App = (props) => { 
+  // Store implemented
+  const itemsReducer = (state = { items: DATA.items, tags: DATA.tags, users: DATA.users }, action) => {
+    console.log(action);
     switch (action.type) {
       default:
         return state;
     }
   }
-
+  // Store openned
   let store = createStore(itemsReducer);
+
+  // Define the current user
+  const [current_user, setCurrentUser] = React.useState(null);
+
+  const addUser = (new_user) => {
+    const USERS  = useSelector(state => state.users);
+    new_user.id = 0;
+    
+    USERS.forEach(user => {
+      if (user.id >= new_user.id) {
+        new_user.id += 1;
+      }
+    })
+    
+    useSelector(state => state.users).push(new_user);
+    
+    console.log(new_user+' added');
+    return new_user;
+  }
 
   let tabName = '';
   current_user ? tabName = 'Account' : tabName = 'Sign In';
@@ -210,7 +210,7 @@ const App = (props) => {
       )
     } else {
       return (
-        <AuthScreen {...props} users={users} addUser={addUser} setCurrentUser={setCurrentUser} />
+        <AuthScreen {...props} addUser={addUser} setCurrentUser={setCurrentUser} />
       )
     }
   }
@@ -240,12 +240,12 @@ const App = (props) => {
             },
           })}
           tabBarOptions={{
-            activeTintColor: 'tomato',
+            activeTintColor: 'cornflowerblue',
             inactiveTintColor: 'gray',
           }}
         >
           <Tab.Screen name="Home">
-            {props => <HomeScreen {...props} tags={tags} items={items} users={users} current_user={current_user} setCurrentUser={setCurrentUser} />}
+            {props => <HomeScreen {...props} current_user={current_user} setCurrentUser={setCurrentUser} />}
           </Tab.Screen>
           <Tab.Screen name={tabName}>
             {props => handleTab(props)}
